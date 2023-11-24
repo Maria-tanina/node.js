@@ -1,25 +1,31 @@
-import {EventEmitter} from "events";
+import { EventEmitter } from "events";
 
 class Post extends EventEmitter {
-    constructor(author, text) {
-        super();
-        this.author = author;
-        this.text = text;
-        this.likesQty = 0;
-    }
+  constructor(author, text) {
+    super();
+    this.author = author;
+    this.text = text;
+    this.likesQty = 0;
+    this.on("likePost", (name) => {
+      console.log(`${name} liked your post`);
+    });
+    this.on("error", (error) => {
+      console.log(error);
+    });
+  }
 
-    like(name) {
-        this.likesQty+=1;
-        this.emit("likePost", name);
+  like(name) {
+    if (!name) {
+      this.emit("error", new Error("Something wrong"));
+    } else {
+      this.likesQty += 1;
+      this.emit("likePost", name);
     }
+  }
 }
-
 
 const myPost = new Post("Maria", "Hello world");
 
-myPost.on("likePost", (name) => {
-    console.log(`${name} liked your post`);
-});
-
 myPost.like("Ivan");
 myPost.like("Anna");
+myPost.like();

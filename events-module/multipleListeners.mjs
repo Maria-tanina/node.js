@@ -1,15 +1,15 @@
-import {EventEmitter} from "events";
+import { EventEmitter } from "events";
 
 const myEmitter = new EventEmitter();
 
 myEmitter.on("myEvent", () => {
-    console.log("First listener");
+  console.log("First listener");
 });
 
 myEmitter.on("myEvent", () => {
-    console.log("Second listener");
+  console.log("Second listener");
 });
 
 setTimeout(() => {
-    myEmitter.emit("myEvent");
+  myEmitter.emit("myEvent");
 }, 2000);

@@ -13,22 +13,15 @@ Promise.resolve().then(() => console.log("Promise1"));
 process.nextTick(() => console.log("nextTick"));
 
 setTimeout(() => {
-    console.log("Timeout2");
-    process.nextTick(() => console.log("Tick inside Timeout"));
+  console.log("Timeout2");
+  process.nextTick(() => console.log("Tick inside Timeout"));
 }, 10);
 
-dns.lookup("tfsport.azurewebsites.net", (error, address) => console.log(address));
+dns.lookup("tfsport.azurewebsites.net", (error, address) =>
+  console.log(address)
+);
 
 console.log("end");
-
-
-
-
-
-
-
-
-
 
 //example of blocking event loop
 
@@ -40,24 +33,23 @@ console.log("end");
 //     console.log("Loop is running...");
 // }
 
-
 //example of non-blocking event loop
 
 let isRunning = true;
 
-setTimeout(() => isRunning = false, 10);
+setTimeout(() => (isRunning = false), 10);
 
 function setImmediatePromise() {
-    return new Promise((resolve, reject) => {
-        setImmediate(() => resolve());
-    })
+  return new Promise((resolve, reject) => {
+    setImmediate(() => resolve());
+  });
 }
 
 async function runLoop() {
-    while(isRunning) {
-        console.log("Loop is running...");
-        await setImmediatePromise();
-    }
+  while (isRunning) {
+    console.log("Loop is running...");
+    await setImmediatePromise();
+  }
 }
 
 runLoop();
